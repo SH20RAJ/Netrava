@@ -19,6 +19,23 @@
 
 ---
 
+### 🎥 Official Solution & Evaluation Video (`soln.mp4`)
+> **Format**: Full 1080p 30 FPS • H.264 (High Profile, `yuv420p`) • AAC 192 kbps Stereo Narration • FastStart MP4  
+> **Direct Link**: [**Watch soln.mp4 on GitHub**](https://github.com/SH20RAJ/Netrava/blob/main/soln.mp4) | [**Direct Raw Download**](https://github.com/SH20RAJ/Netrava/raw/main/soln.mp4) (6.2 MB)
+
+| Scene | Timestamp | Topic Covered in Demonstration Video |
+|:---:|:---:|:---|
+| **01** | `00:00 - 00:21` | **The Gujarat Challenge & Mission Vision**: 80k-camera heterogeneity, vendor-neutral fabric |
+| **02** | `00:21 - 00:41` | **Statewide Camera Registry & GIS**: 52 seeded nodes, PostGIS, RTSP/ONVIF/VMS federation |
+| **03** | `00:41 - 01:00` | **AI ANPR & 5-Frame Temporal Voting**: YOLOv8 + Indian HSRP character flutter elimination |
+| **04** | `01:00 - 01:22` | **Real-Time Watchlist Hit**: Sub-second alert dispatch for stolen vehicle `GJ01AB1234` |
+| **05** | `01:22 - 01:49` | **Cross-Camera Trajectory Reconstruction**: 14.35 km corridor kinematics (17.2 km/h, 94% score) |
+| **06** | `01:49 - 02:04` | **Section 65B Cryptographic Evidence Vault**: Deterministic SHA-256 tamper-evident chain of custody |
+| **07** | `02:04 - 02:24` | **80,000-Camera Scalability Math**: 99.87% WAN reduction (200 Gbps -> 336 Mbps), 34 district GPU hubs |
+| **08** | `02:24 - 02:36` | **Conclusion & Operational Maxim**: One fabric, many vendors, one operational view |
+
+---
+
 > ### 🏛️ Core Architectural Maxim
 > *"Federate what already exists, centralize intelligence where useful, and push processing toward the edge when bandwidth or latency requires it."*
 
