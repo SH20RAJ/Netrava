@@ -1,0 +1,43 @@
+# MediaMTX Configuration for Netrava Video Intelligence Fabric
+# Documentation: https://github.com/bluenviron/mediamtx
+
+api: yes
+apiAddress: :9997
+
+# Logging
+logLevel: info
+logDestinations: [stdout]
+
+# RTSP Server
+rtsp: yes
+rtspDisable: no
+protocols: [tcp]
+encryption: "no"
+rtspAddress: :8554
+rtspsAddress: :8322
+
+# RTMP Server
+rtmp: yes
+rtmpDisable: no
+rtmpAddress: :1935
+
+# HLS Server (Low-latency HLS for Web Dashboard)
+hls: yes
+hlsDisable: no
+hlsAddress: :8888
+hlsAlwaysRemux: yes
+hlsVariant: lowLatency
+hlsSegmentCount: 5
+hlsSegmentDuration: 1s
+
+# WebRTC Server (Sub-second latency for Tactical Video Wall)
+webrtc: yes
+webrtcDisable: no
+webrtcAddress: :8889
+webrtcLocalUDPAddress: :8189
+
+paths:
+  # Catch-all: dynamically proxy any RTSP or test feed requested by Netrava
+  all:
+    source: publisher
+    sourceOnDemand: no
