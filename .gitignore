@@ -1,0 +1,33 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Node.js & Next.js
+apps/web/node_modules/
+apps/web/.next/
+apps/web/out/
+.pnpm-debug.log*
+
+# OS & IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Evidence & Logs
+data/evidence/*.jpg
+data/evidence/*.mp4
+*.log

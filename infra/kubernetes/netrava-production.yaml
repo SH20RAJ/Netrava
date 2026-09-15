@@ -1,0 +1,111 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: netrava
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: netrava-config
+  namespace: netrava
+data:
+  APP_MODE: "production"
+  DEFAULT_STATE: "Gujarat"
+  DATABASE_URL: "postgresql+asyncpg://netrava:netrava_secure_password_2026@postgres-service:5432/netrava_db"
+  REDIS_URL: "redis://redis-service:6379/0"
+  MEDIAMTX_API_URL: "http://mediamtx-service:9997"
+  MEDIAMTX_RTSP_HOST: "mediamtx-service:8554"
+  MEDIAMTX_HLS_HOST: "mediamtx-service:8888"
+  MEDIAMTX_WEBRTC_HOST: "mediamtx-service:8889"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netrava-api
+  namespace: netrava
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: netrava-api
+  template:
+    metadata:
+      labels:
+        app: netrava-api
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/sh20raj/netrava-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: netrava-config
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "2000m"
+              memory: "4Gi"
+          readinessProbe:
+            httpGet:
+              path: /api/v1/system/health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: netrava-api-service
+  namespace: netrava
+spec:
+  selector:
+    app: netrava-api
+  ports:
+    - port: 8000
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netrava-web
+  namespace: netrava
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: netrava-web
+  template:
+    metadata:
+      labels:
+        app: netrava-web
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/sh20raj/netrava-web:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "2Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: netrava-web-service
+  namespace: netrava
+spec:
+  type: LoadBalancer
+  selector:
+    app: netrava-web
+  ports:
+    - port: 80
+      targetPort: 3000

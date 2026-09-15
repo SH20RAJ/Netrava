@@ -29,6 +29,9 @@ dev = [
     "mypy>=1.9.0",
 ]
 
+[tool.setuptools]
+packages = ["core", "db", "models", "routers", "schemas", "services"]
+
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
