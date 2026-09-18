@@ -1,13 +1,13 @@
-"""Unified AI Video Analytics Inference Pipeline."""
+\"\"\"Unified AI Video Analytics Inference Pipeline.\"\"\"
 
 import time
 import uuid
 import numpy as np
 from datetime import datetime
 from typing import Dict, Any, Optional
-from services.detector import VehicleDetector
-from services.anpr import TemporalPlateVoter
-from services.tracker import ByteTracker
+from services.ai_pipeline.detector import VehicleDetector
+from services.ai_pipeline.anpr import TemporalPlateVoter
+from services.ai_pipeline.tracker import ByteTracker
 from db.session import AsyncSessionLocal
 from models.sighting import VehicleSighting
 from services.alert_service import AlertService
@@ -29,7 +29,7 @@ class VideoAnalyticsPipeline:
         longitude: float,
         simulated_plate: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Processes an incoming frame through detection, tracking, ANPR, and alerting."""
+        \"\"\"Processes an incoming frame through detection, tracking, ANPR, and alerting.\"\"\"
         start_time = time.time()
         
         # 1. Detect vehicles
@@ -42,12 +42,12 @@ class VideoAnalyticsPipeline:
         # 3. Plate Recognition & Temporal Voting
         results = []
         for obj in tracked_objects:
-            plate_cand = simulated_plate or "GJ01AB1234"
+            plate_cand = simulated_plate or \"GJ01AB1234\"
             consensus_plate, consensus_conf, votes = self.plate_voter.add_observation(
                 obj.track_id, plate_cand, obj.confidence
             )
 
-            evt_id = f"evt_{self.external_id}_{int(time.time()*1000)}"
+            evt_id = f\"evt_{self.external_id}_{int(time.time()*1000)}\"
 
             # Save sighting to database if confident
             if consensus_conf >= 0.70:
@@ -62,7 +62,7 @@ class VideoAnalyticsPipeline:
                         normalized_plate=consensus_plate,
                         plate_confidence=consensus_conf,
                         vehicle_class=obj.class_name,
-                        vehicle_color="white",
+                        vehicle_color=\"white\",
                         track_id=obj.track_id
                     )
                     db.add(sighting)
@@ -80,19 +80,19 @@ class VideoAnalyticsPipeline:
                     )
 
             results.append({
-                "track_id": obj.track_id,
-                "bbox": obj.bbox,
-                "vehicle_class": obj.class_name,
-                "plate": consensus_plate,
-                "confidence": consensus_conf,
-                "temporal_votes": votes
+                \"track_id\": obj.track_id,
+                \"bbox\": obj.bbox,
+                \"vehicle_class\": obj.class_name,
+                \"plate\": consensus_plate,
+                \"confidence\": consensus_conf,
+                \"temporal_votes\": votes
             })
 
         latency_ms = (time.time() - start_time) * 1000.0
 
         return {
-            "camera_id": self.camera_id,
-            "processed_at": datetime.utcnow().isoformat(),
-            "latency_ms": round(latency_ms, 2),
-            "detections": results
+            \"camera_id\": self.camera_id,
+            \"processed_at\": datetime.utcnow().isoformat(),
+            \"latency_ms\": round(latency_ms, 2),
+            \"detections\": results
         }
