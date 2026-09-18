@@ -1,6 +1,6 @@
 # NETRAVA: Integration & Workflow Architecture
 ## Edge-to-Cloud Video Intelligence Fabric
-**Reference Repository Document**: `https://github.com/SH20RAJ/Netrava/blob/main/artitrcture.md`
+**Reference Repository Document**: `https://github.com/SH20RAJ/Netrava/blob/main/architecture.md`
 
 ---
 
